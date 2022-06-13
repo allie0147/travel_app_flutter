@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/misc/colors.dart';
+import 'package:travel_app/widgets/app_text.dart';
 
 import '../../widgets/app_large_text.dart';
 
@@ -12,6 +13,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with TickerProviderStateMixin {
+  var exploreImages = {
+    'ballooning.png': 'Ballooning',
+    'hiking.png': 'Hiking',
+    'kayaking.png': 'Kayaking',
+    'snorkeling.png': 'Snorkeling',
+  };
+
   @override
   Widget build(BuildContext context) {
     TabController tabController =
@@ -22,7 +30,7 @@ class _HomePageState extends State<HomePage>
         children: [
           // Menu
           Container(
-            padding: const EdgeInsets.only(top: 70, left: 20),
+            padding: const EdgeInsets.only(top: 50, left: 20),
             child: Row(
               children: [
                 const Icon(
@@ -52,9 +60,6 @@ class _HomePageState extends State<HomePage>
               text: 'Discover',
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
           // Tabbar
           Container(
             height: 50,
@@ -81,17 +86,96 @@ class _HomePageState extends State<HomePage>
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(
-                vertical: 10, horizontal: 20),
-            height: 200,
+            height: 300,
             width: double.maxFinite,
             child: TabBarView(
               controller: tabController,
-              children: const [
-                Text('text'),
+              children: [
+                ListView.builder(
+                  itemCount: 3,
+                  padding: const EdgeInsets.only(left: 20),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: const EdgeInsets.only(
+                        right: 15,
+                        top: 10,
+                      ),
+                      width: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        image: const DecorationImage(
+                          image: AssetImage('img/mountain.jpeg'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 Text('text'),
                 Text('text'),
               ],
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppLargeText(
+                  text: 'Explore more',
+                  size: 22,
+                ),
+                AppText(
+                  text: 'See all',
+                  color: AppColors.textColor1,
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Container(
+            width: double.maxFinite,
+            height: 100,
+            margin: const EdgeInsets.only(left: 20),
+            child: ListView.builder(
+              itemCount: 4,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (_, index) {
+                return Container(
+                  margin: const EdgeInsets.only(right: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'img/${exploreImages.keys.elementAt(index)}'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: AppText(
+                          text: exploreImages.values.elementAt(index),
+                          color: AppColors.textColor2,
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
             ),
           )
         ],
