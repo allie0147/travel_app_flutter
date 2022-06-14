@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/misc/colors.dart';
 import 'package:travel_app/widgets/app_text.dart';
 
-import '../../widgets/app_large_text.dart';
+import '../widgets/app_large_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -167,6 +167,7 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                       Container(
+                        margin: const EdgeInsets.only(top: 10),
                         child: AppText(
                           text: exploreImages.values.elementAt(index),
                           color: AppColors.textColor2,
