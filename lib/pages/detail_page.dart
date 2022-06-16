@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:travel_app/misc/colors.dart';
+import 'package:travel_app/widgets/app_buttons.dart';
 import 'package:travel_app/widgets/app_large_text.dart';
+import 'package:travel_app/widgets/responsive_button.dart';
 
 import '../widgets/app_text.dart';
 
@@ -13,11 +15,12 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   int gottenStars = 3;
+  int selectedPeople = -1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
         child: Stack(
@@ -107,10 +110,10 @@ class _DetailPageState extends State<DetailPage> {
                         Wrap(
                           children: List.generate(5, (index) {
                             return Icon(
-                              Icons.star,
-                              color: index < gottenStars
-                                  ? AppColors.starColor
-                                  : AppColors.buttonBackground,
+                              index < gottenStars
+                                  ? Icons.star_rounded
+                                  : Icons.star_border_rounded,
+                              color: AppColors.starColor,
                             );
                           }),
                         ),
@@ -118,13 +121,98 @@ class _DetailPageState extends State<DetailPage> {
                           width: 10,
                         ),
                         AppText(
-                          text: '(3.0)',
+                          text: '($gottenStars.0)',
                           color: AppColors.textColor2,
                         ),
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    AppLargeText(
+                      text: 'People',
+                      color: Colors.black.withOpacity(0.8),
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AppText(
+                      text: 'Number of people in your group',
+                      color: AppColors.mainTextColor,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Wrap(
+                      children: List.generate(
+                        5,
+                        (index) => InkWell(
+                          onTap: () {
+                            setState(() {
+                              selectedPeople = index;
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: AppButton(
+                              size: 50,
+                              color: selectedPeople == index
+                                  ? Colors.white
+                                  : Colors.black,
+                              backgroundColor: selectedPeople == index
+                                  ? Colors.black
+                                  : AppColors.buttonBackground,
+                              borderColor: selectedPeople == index
+                                  ? Colors.black
+                                  : AppColors.buttonBackground,
+                              text: (index + 1).toString(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppLargeText(
+                      text: 'Description',
+                      color: Colors.black.withOpacity(0.8),
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AppText(
+                      text:
+                          'Yosemite National Park is located in central Sierra Nevada in the US state of California. It is located near the wild protected areas.',
+                      color: AppColors.mainTextColor,
+                    ),
                   ],
                 ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: 20,
+              right: 20,
+              child: Row(
+                children: [
+                  AppButton(
+                    size: 60,
+                    color: AppColors.textColor1,
+                    backgroundColor: Colors.white,
+                    borderColor: AppColors.textColor1,
+                    isIcon: true,
+                    icon: Icons.favorite_outline_rounded,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ResponsiveButton(
+                    isResponsive: true,
+                  )
+                ],
               ),
             )
           ],
